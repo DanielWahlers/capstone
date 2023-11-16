@@ -1,0 +1,182 @@
+.Home {
+  text-align: center;
+  background-color: white;
+  color: #292929;
+  overflow-x: hidden;
+}
+.Home #feed{
+  position: absolute;
+  top: 76px;
+}
+
+.Home .artist img{
+  border-radius: 50%;
+}
+
+.Home .buttons button{
+  background: none;
+  border: none;
+  font-size: large;
+}
+.Home .buttons img{
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  margin-top: 2px;
+  border: solid 2px black;
+}
+
+.Home .flexbar{
+  display: flex;
+  justify-content: space-between;
+  overflow:auto;
+}
+
+.Home .flexbar div{
+  display: flex;
+}
+
+/* #navbar img{
+  height: 70px;
+  width: auto;
+} */
+
+.Home .buttons{
+  display: flex;
+  justify-content: space-between;
+}
+
+.Home .post{
+  display:grid;
+  grid-template-columns: 31vw 39vw 27vw;
+  grid-template-rows: 430px;
+  column-gap: 1vw;
+  border-bottom: 1px solid #292929;
+  background-color: whitesmoke;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  z-index: 1;
+}
+
+.Home .artist{
+  grid-column: 1;
+  grid-row: 1;
+}
+/* .art{
+  grid-column: 2;
+  grid-row: 1;
+} */
+
+.Home .promotion img{
+  width: 12vw;
+  
+  padding-bottom: 5px;
+}
+
+.Home .promotion{
+  display: flex;
+}
+
+
+.Home .trend-group{
+  margin-bottom: 18px;
+}
+
+.Home .promotion div{
+  display: flex;
+  flex-direction: column;
+}
+
+.Home .promotion p{
+  max-width: 20vw;
+}
+
+.Home .App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+
+
+.Home .App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.Home .App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.Home .pane {
+  height: 100%;
+  /* min-height: 50vh; */
+}
+
+.Home .react-split__pane {
+  transition: all 1s ease;
+}
+
+.Home #author-posts{
+  background-color: #0097b2;
+  /* background-color: #ff0012 */
+}
+
+.Home #promoted-posts{
+  background-color: #6da7cc;
+  /* background-color: #d3001c */
+}
+
+.Home .authors img{
+  height: 50px;
+  width: 50px;
+  border: solid 2px #292929;
+}
+
+.Home .authors{
+  display: flex;
+}
+
+.Home .pane{
+  color:#292929;
+}
+
+.Home .fa-solid{
+  color: #292929;
+}
+
+.Home .fa-regular{
+  color: #292929;
+}
+
+.Home #author-flexbar{
+  border-bottom: solid 1px black;
+}
+
+.Home .authors button{
+  background: none;
+  border: none;
+  padding-right: 10px;
+  color: black;
+}
+

@@ -1,0 +1,67 @@
+ .buttons img{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    margin-top: 2px;
+    border: solid 2px black;
+  }
+
+  #navbar{
+    position: fixed;
+    width: 99vw;
+    background-color: #90a4ae;
+    /* background-color: #292929; */
+    border-bottom: solid 1px #292929;
+    z-index: 50;
+    height: 77px;
+  }
+
+ .flexbar{
+    display: flex;
+    justify-content: space-between;
+    overflow:auto;
+  }
+
+.flexbar div{
+    display: flex;
+  }
+
+  .buttons{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  #current_user{
+    height: 60px;
+    background-color: #6da7cc;
+    border-radius: 9%;
+    margin-top: 7px;
+    border: solid 2px white;
+  }
+  
+  #signOut{
+    background-color: #0097b2;
+    margin-top: 7px;
+    margin-bottom:8px;
+    margin-left: 15px;
+    border-radius: 10%;
+    margin-right: 8px;
+    border: solid 2px white;
+  }
+
+  #navbar .buttons button{
+    background: none;
+    border: none;
+    font-size: large;
+  }
+
+  #navbar .App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+  }

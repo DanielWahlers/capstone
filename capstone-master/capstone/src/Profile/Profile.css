@@ -1,0 +1,142 @@
+.Profile {
+  text-align: center;
+  background-color: whitesmoke;
+  min-height: 100vh;
+}
+
+.Profile main{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.Profile #feed{
+  display: grid;
+  grid-template-columns: auto auto;
+}
+
+.Profile #feed img{
+  height: 300px;
+}
+
+.Profile .App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.Profile #profile{
+  display: grid;
+  grid-template-columns: auto 0px;
+}
+
+.Profile #followers{
+  grid-column: 2;
+  padding-top: 80px;
+}
+
+.Profile #navbar{
+  position: fixed;
+  width: 100vw;
+  background-color: white;
+  z-index: 50;
+}
+
+.Profile .flexbar{
+  display: flex;
+  justify-content: space-between;
+}
+
+.Profile .flexbar div{
+  display: flex;
+}
+
+
+
+.Profile .buttons{
+  display: flex;
+  justify-content: space-between;
+}
+
+.Profile #background-img{
+  margin-right: -875px;
+}
+
+.Profile #below-banner{
+  width: 1100px;
+  margin-left: 5px;
+  display: grid;
+  grid-template-columns: auto 250px;
+}
+
+.Profile #friends{
+  grid-column: 2;
+  display: flex;
+  justify-content: left;
+  margin-left: 5px;
+}
+
+.Profile #controls{
+  grid-column: 1;
+}
+
+.Profile #banner{
+  padding-top: 80px;
+  display: flex;
+  margin-left: 5px;
+}
+
+.Profile #banner-content{
+  display: flex;
+  flex-direction: column;
+  justify-content:left;
+  align-items: flex-start;
+  margin-top: 55px;
+  z-index: 12;
+  color: white;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
+}
+
+.Profile #profile-pic{
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  margin-right: -100px;
+  z-index: 1;
+  margin-top: 10px;
+}
+
+.Profile #username{
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .MyProfile  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.Profile .App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.Profile .App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+

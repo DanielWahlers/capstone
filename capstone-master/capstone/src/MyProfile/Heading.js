@@ -60,7 +60,7 @@ export default function Heading({user}){
                             })}
                         />
                     </div>
-                    <Feed tab={tab}/>
+                    <Feed tab={tab} user={user}/>
                     <div id="friends">Friends:</div>
                 </div>
             </section>

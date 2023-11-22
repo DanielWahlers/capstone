@@ -29,6 +29,8 @@ export default function NavBar({user}){
         navigate('/home', {state: {user: user}});
     }
 
+    console.log("NavBar user:", user);
+
     return(
         <section id="navbar" className="flexbar">
             <div>

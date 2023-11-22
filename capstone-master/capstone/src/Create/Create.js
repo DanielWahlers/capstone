@@ -5,18 +5,21 @@ import Preview from './Preview.js';
 import Upload from './Upload.js';
 import NavBar from '../NavBar.js';
 
-
 export default function Create(){
     const location = useLocation();
 
 
     return(
         <>{location.state?
-        <section className="create">
+            <div>
             <NavBar id="navbar" user={location.state.user}/>
-            <Preview id="preview" user={location.state.user}/>
-            <Upload id="upload" user={location.state.user}/>
-        </section>
+            <main>
+              <div className="create">
+                
+              </div>
+            </main>
+          
+          </div>
         : <Navigate to="/"/>
         }
         </>

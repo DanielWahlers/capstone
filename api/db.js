@@ -97,21 +97,33 @@ async function getMany(table, field, conditions){
     return result[0];
 }
 
-async function getManyWhere(table, field, conditions, field2, condition){
+async function getDoubleCondition(table, field1, condition1, field2, condition2){
     const connection = await mysql2.createConnection(config.db);
-    // const sql = `SELECT * FROM ${table} WHERE ${field2} = ?`;
+    const sql = `SELECT * FROM ${table} WHERE ${field1} = ? and ${field2} = ?`;
+    console.log(sql, condition1, condition2);
+    let result = await connection.promise().query(
+        sql, [condition1, condition2]
+    );
+    // const sql = `SELECT * FROM ${table} WHERE ${field} IN (?)`;
     // console.log(sql, conditions, condition);
     // const result = await connection.promise().query(
-    //     sql, condition
+    //     sql, [4, 2, 3]
     // );
-    const sql = `SELECT * FROM ${table} WHERE ${field} IN (?)`;
-    console.log(sql, conditions, condition);
-    const result = await connection.promise().query(
-        sql, [4, 2, 3]
-    );
+    result = result[0][0];
+    if(table == "users"){
+        try{
+            let profileResults = await getCondition("profile", "user_id", result.id);
+        // result['media_link'] = profileResults.media_link;
+            profileResults = profileResults[0];
+            result.media_link = profileResults;
+        //result.media_link.push(profileResults);
+        } catch(error){
+            console.log("Error: ", error);
+        }
+    }
     console.log(result);
     connection.destroy();
-    return result[0];
+    return result;
 }
 
 async function getCondition(table, field, condition){
@@ -369,6 +381,53 @@ async function getRandomPosts(notList, loadNum){
     return randomPosts;
 }
 
+async function getAuthoredPosts(user_id){
+    const connection = await mysql2.createConnection(config.db);
+    console.log("user_id", user_id);
+    let results = await connection.promise().query(
+        `select * from posts where id in (select post_id from authors where user_id = ?)`, user_id
+    );
+    results = results[0];
+    console.log("results", results);
+    if(results.length == 0){
+        connection.destroy();
+    }
+    else{
+        const postIds = results.map(post=>post.id);
+        console.log("postIds", postIds);
+        let sql = `select * from media where posts_id in (${postIds.join(', ')})`;
+        console.log("sql", sql);
+        let mediaList = await connection.promise().query(
+            sql
+        );
+        mediaList = mediaList[0];
+        for(const post of results){
+            post.media = [];
+            for(const media of mediaList){
+                if(media.posts_id === post.id){
+                    post.media.push(media);
+                }
+            }
+        }
+
+        for(const post of results){
+            sql = `select * from users where id in (
+                select user_id from authors where post_id = ?)`;
+                let authors = await connection.promise().query(
+                    sql, post.id
+                );
+                authors = authors[0];
+            post.authors = [];
+            for(const author of authors){
+                post.authors.push(author);
+            }
+        }
+        connection.destroy();
+    }
+    
+    return results;
+}
+
 async function getPromotions(user_id){
     const connection = await mysql2.createConnection(config.db);
     console.log("user_id", user_id);
@@ -397,6 +456,66 @@ async function getPromotions(user_id){
                 }
             }
         }
+
+        for(const post of results){
+            sql = `select * from users where id in (
+                select user_id from authors where post_id = ?)`;
+                let authors = await connection.promise().query(
+                    sql, post.id
+                );
+                authors = authors[0];
+            post.authors = [];
+            for(const author of authors){
+                post.authors.push(author);
+            }
+        }
+        connection.destroy();
+    }
+    
+    return results;
+}
+
+async function getLikedPosts(user_id){
+    const connection = await mysql2.createConnection(config.db);
+    console.log("user_id", user_id);
+    let results = await connection.promise().query(
+        `select * from posts where id in (select post_id from likes where user_id = ?)`, user_id
+    );
+    results = results[0];
+    console.log("results", results);
+    if(results.length == 0){
+        connection.destroy();
+    }
+    else{
+        const postIds = results.map(post=>post.id);
+        console.log("postIds", postIds);
+        let sql = `select * from media where posts_id in (${postIds.join(', ')})`;
+        console.log("sql", sql);
+        let mediaList = await connection.promise().query(
+            sql
+        );
+        mediaList = mediaList[0];
+        for(const post of results){
+            post.media = [];
+            for(const media of mediaList){
+                if(media.posts_id === post.id){
+                    post.media.push(media);
+                }
+            }
+        }
+
+        for(const post of results){
+            sql = `select * from users where id in (
+                select user_id from authors where post_id = ?)`;
+                let authors = await connection.promise().query(
+                    sql, post.id
+                );
+                authors = authors[0];
+            post.authors = [];
+            for(const author of authors){
+                post.authors.push(author);
+            }
+        }
         connection.destroy();
     }
     
@@ -415,5 +534,8 @@ export{
     removeDoubleCondition,
     getFeedNew,
     getInteraction,
-    getPromotions
+    getPromotions,
+    getDoubleCondition, 
+    getAuthoredPosts,
+    getLikedPosts
 };

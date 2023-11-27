@@ -3,7 +3,7 @@ import Home from './Home/Home.js';
 import Login from './Login/Login.js';
 import MyProfile from './MyProfile/MyProfile.js';
 import Profile from './Profile/Profile.js';
-import Create from './Create/Create.js';
+import Create from './Create/CreateTest.js';
   export default function App() {
     return (
     <>

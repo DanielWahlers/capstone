@@ -18,7 +18,25 @@ export default function Art({post}){
     return(
         <div className="art">
             <Carousel afterChange={onChange}>
-                {post.media.map((content)=>{return (<div key={content.id}><Image src={content.media_link}/> </div>)})}
+                {post.media.map((content)=>{if(content.media_type == "photo")
+                {return (
+                <div key={content.id}><Image src={content.media_link}/> </div>
+                )
+              } else if (content.media_type == "video"){
+                return (
+                  <div key={content.id}><video controls><source src={content.media_link}/></video></div>
+                )
+              } else if (content.media_type == "audio"){
+                return(
+                  <div key={content.id}><audio controls><source src={content.media_link}/></audio></div>
+                )
+              } else{
+                return(
+                  <div key={content.id}><p>This content could not be loaded because it has an unrecognized type</p></div>
+                )
+              }
+              }
+              )}
             </Carousel>
       </div>
     )

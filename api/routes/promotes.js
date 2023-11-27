@@ -9,8 +9,9 @@ const router = express.Router();
 router.get('/', async (req,res)=>{
     const condition1 = req.query.user_id;
     const data = await getPromotions(condition1);
+    console.log("getPromotionsData:", data);
     res.status(200).json(data);
-})
+});
 
 router.post('/', async (req,res)=>{
     const info = req.query;

@@ -14,6 +14,16 @@ router.get("/", async (req, res)=> {
     res.status(200).json(data);
 });
 
+router.get('/others', async (req,res)=>{
+    const userId = req.query.user_id;
+    const authored = await getCondition("authors", "user_id", userId);
+    const postIds = authored.map((author)=>{return author.post_id})
+    const posts = await getMany("posts", "id", postIds);
+    for(const post in posts){
+        //This needs to be finished
+    }
+});
+
 router.get("/:id", async (req, res) => {
     const { id } = req.params;
     const post = await getOne("posts", id);

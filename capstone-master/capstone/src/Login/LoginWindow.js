@@ -6,18 +6,19 @@ import { Button, Checkbox, Form, Input } from 'antd';
 
 export default function LoginWindow({setWindowType}){
     const navigate = useNavigate();
-    const user = {
-        "id": 2,
-        "username": "Crossed",
-        "first_name": "Daniel",
-        "last_name": "Wahlers",
-        "user_password": "Dan123",
-        "email": "dannywahlers@fake.com",
-        "bio": "This is my bio",
-        "date_posted": "2023-10-21T18:55:01.000Z",
-        "location": "",
-        "media_link": "https://picsum.photos/300/200?id=0"
-    };
+    const apiString = "http://localhost:5000";
+    // const user = {
+    //     "id": 2,
+    //     "username": "Crossed",
+    //     "first_name": "Daniel",
+    //     "last_name": "Wahlers",
+    //     "user_password": "Dan123",
+    //     "email": "dannywahlers@fake.com",
+    //     "bio": "This is my bio",
+    //     "date_posted": "2023-10-21T18:55:01.000Z",
+    //     "location": "",
+    //     "media_link": "https://picsum.photos/300/200?id=0"
+    // };
 
     const onFinish = (values) => {
         console.log('Success:', values);
@@ -33,7 +34,24 @@ export default function LoginWindow({setWindowType}){
 
 
     async function signin(){
-        navigate("/home", {state: {user:user}});
+        const userName = document.getElementById("usernameInput").value;
+        const password = document.getElementById("passwordInput").value;
+        //alert("This is what I am getting for username: " + userName + "\nAnd this is what I am getting for password: " + password);
+        console.log("userName: ", userName);
+        if(userName == "" || password == ""){
+            alert("You must enter a username and password");
+        }else{
+            try{
+                const url = apiString + `/users/signin?username=${userName}&password=${password}`;
+                const result = await fetch(url);
+                const user = await result.json();
+                console.log("result:", user);
+                navigate("/home", {state: {user: user}});
+            } catch (error){
+                console.log("error: ", error);
+                alert("Your username or password is incorrect");
+            }
+        }
     }
 
     return(
@@ -42,6 +60,7 @@ export default function LoginWindow({setWindowType}){
             <img src={logo}/>
             <h3>Please enter your username and password</h3>
             <Form
+                id="my-form"
                 name="basic"
                 labelCol={{
                     span: 8,
@@ -62,6 +81,7 @@ export default function LoginWindow({setWindowType}){
                 <Form.Item
                     label="Username"
                     name="username"
+                    id="username"
                     rules={[
                         {
                         required: true,
@@ -69,12 +89,13 @@ export default function LoginWindow({setWindowType}){
                         },
                     ]}
                 >
-                    <Input />
+                    <Input id="usernameInput" />
                 </Form.Item>
 
                 <Form.Item
                     label="Password"
                     name="password"
+                    id="password"
                     rules={[
                         {
                         required: true,
@@ -82,7 +103,7 @@ export default function LoginWindow({setWindowType}){
                         },
                     ]}
                 >
-                    <Input.Password />
+                    <Input.Password id="passwordInput" />
                 </Form.Item>
 
                 {/* <Form.Item

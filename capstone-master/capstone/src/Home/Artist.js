@@ -5,26 +5,32 @@ import { Button, Drawer, Radio, Space } from 'antd';
 import {useNavigate} from 'react-router-dom';
 import { Modal } from 'antd';
 
-export default function Artist({post, user, setSizes}){
+export default function Artist({post, user, setSizes, toggle}){
     const [liked, setLiked] = useState(false);
     const [disliked, setDisliked] = useState(false);
     const [drawerOpen, setDrawerOpen] = useState(false);
     const placement = 'left';
     const [promoted, setPromoted] = useState(false);
+    const [beenToggled, setBeenToggled] = useState(0);
+    const [comments, setComments] = useState([]);
     const navigate = useNavigate();
     const apiString = "http://localhost:5000";
 
 const [modalOpen, setModalOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
-  const [modalText, setModalText] = useState('Content of the modal');
+  const [modalText, setModalText] = useState('No Comments yet');
   const showModal = () => {
 
     //update modalText before showing it
     setModalOpen(true);
-    setSizes(['95%', 'auto']);
+    if(beenToggled == 0){
+        toggle()
+        setBeenToggled(1);
+    }
   };
+
   const handleOk = () => {
-    setModalText('The modal will be closed after two seconds');
+    setModalText('Posting Your Comment');
     setConfirmLoading(true);
     setTimeout(() => {
       setModalOpen(false);
@@ -47,6 +53,16 @@ const [modalOpen, setModalOpen] = useState(false);
         navigate('/profile', {state: {user:user, author:post.authors[0]}})
       };
       
+
+      async function getComments(){
+        const url = apiString + `/comments?post_id=${post.id}`;
+        const res = await fetch(url);
+        const results = await res.json();
+        setComments(results);
+
+        const commentPrint = comments.map((comment)=>{return(`${comment.comment_text}\n`)});
+        setModalText(commentPrint);
+      }
 
     async function getInteractions(){
 //liked
@@ -81,6 +97,7 @@ const [modalOpen, setModalOpen] = useState(false);
 
     useEffect(()=>{
         getInteractions();
+        getComments();
         console.log("I am within the useEffect on the Artist");
     }, []);
 
@@ -104,7 +121,11 @@ const [modalOpen, setModalOpen] = useState(false);
             };
             const res = await fetch(url, requestOptions);
             const likeData = await res.json();
-            setSizes(['95%', 'auto']);
+            
+            if(beenToggled == 0){
+                toggle();
+                setBeenToggled(1);
+            }
             setLiked(false);
         }
         else{
@@ -115,7 +136,11 @@ const [modalOpen, setModalOpen] = useState(false);
             };
             const res = await fetch(url, requestOptions);
             const likeData = await res.json();
-            setSizes(['95%', 'auto']);
+
+            if(beenToggled == 0){
+                toggle();
+                setBeenToggled(1);
+            }
             setLiked(true);
         }
     }
@@ -129,7 +154,10 @@ const [modalOpen, setModalOpen] = useState(false);
             };
             const res = await fetch(url, requestOptions);
             const dislikeData = await res.json();
-            setSizes(['95%', 'auto']);
+            if(beenToggled == 0){
+                toggle();
+                setBeenToggled(1);
+            }
             setDisliked(false);
         }
         else{
@@ -140,7 +168,10 @@ const [modalOpen, setModalOpen] = useState(false);
             };
             const res = await fetch(url, requestOptions);
             const dislikeData = await res.json();
-            setSizes(['95%', 'auto']);
+            if(beenToggled == 0){
+                toggle();
+                setBeenToggled(1);
+            }
             setDisliked(true);
         }
     }
@@ -179,7 +210,10 @@ const [modalOpen, setModalOpen] = useState(false);
             };
             const res = await fetch(url, requestOptions);
             const likeData = await res.json();
-            setSizes(['95%', 'auto']);
+            if(beenToggled == 0){
+                toggle();
+                setBeenToggled(1);
+            }
             setPromoted(false);
         }
         else{
@@ -190,7 +224,10 @@ const [modalOpen, setModalOpen] = useState(false);
             };
             const res = await fetch(url, requestOptions);
             const likeData = await res.json();
-            setSizes(['95%', 'auto']);
+            if(beenToggled == 0){
+                toggle();
+                setBeenToggled(1);
+            }
             setPromoted(true);
         }
     }
@@ -208,7 +245,10 @@ const [modalOpen, setModalOpen] = useState(false);
         var timer = setTimeout(() => {
             btn.innerHTML = `<i className="fa-solid fa-share"></i>`;
         }, 2000);
-        setSizes(['95%', 'auto']);
+        if(beenToggled == 0){
+            toggle();
+            setBeenToggled(1);
+        }
     }
 
     // function interact(){
@@ -253,7 +293,7 @@ const [modalOpen, setModalOpen] = useState(false);
                                     </Space>
                                 }
                             >
-                                <p>This will show a preview of their profile</p>
+                                <p>Bio: {author.bio}</p>
                             </Drawer>
                             </div>
                  })}
@@ -285,6 +325,7 @@ const [modalOpen, setModalOpen] = useState(false);
                 confirmLoading={confirmLoading}
                 onCancel={handleCancel}
             >
+                
                 <p>{modalText}</p>
             </Modal>
             <div className="buttons">

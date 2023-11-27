@@ -67,14 +67,16 @@
   grid-row: 1;
 } */
 
-.Home .promotion img{
-  width: 12vw;
-  
+.Home .promotions img{
+  width: 10vw;
+  margin-left: 10px;
+  margin-right: 5px;
   padding-bottom: 5px;
 }
 
-.Home .promotion{
+.Home .promotions{
   display: flex;
+  flex-direction: row;
 }
 
 
@@ -87,9 +89,13 @@
   flex-direction: column;
 }
 
-.Home .promotion p{
-  max-width: 20vw;
+.Home #promo-usernames{
+  display: flex;
+  flex-direction: row;
 }
+
+
+
 
 .Home .App-logo {
   height: 40vmin;
@@ -179,4 +185,9 @@
   padding-right: 10px;
   color: black;
 }
+
+.Home .authored-section{
+  opacity: 0;
+}
+
 

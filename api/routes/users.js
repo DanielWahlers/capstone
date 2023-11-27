@@ -4,12 +4,25 @@ import {getOne} from '../db.js';
 import {create} from '../db.js';
 import {remove} from '../db.js';
 import {update} from '../db.js';
+import {getDoubleCondition} from '../db.js';
+import {getCondition} from '../db.js';
 
 const router = express.Router();
 
 router.get("/", async (req, res)=> {
     const data = await getAll("users");
     res.status(200).json(data);
+});
+
+router.get('/signin', async (req,res)=>{
+    const username = req.query.username;
+    const password = req.query.password;
+    try{
+        const data = await getDoubleCondition("users", "username", username, "user_password", password);
+        res.status(200).json(data);
+    } catch(error){
+        res.status(500).json({message: "No Match in Database"});
+    }
 });
 
 router.get("/:id", async (req, res) => {

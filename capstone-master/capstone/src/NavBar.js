@@ -38,7 +38,7 @@ export default function NavBar({user}){
             </div>
             <div className="buttons">
                 <div id="current_user">
-                    <button id="user_icon"><img src={user.media_link} onClick={showDrawer}/></button>
+                    <button id="user_icon"><img src={user.media_link.media_link} onClick={showDrawer}/></button>
                     <button onClick={viewProfile}><h3>{user.username}</h3></button>
                 </div>
                 <div id="signOut">
@@ -59,9 +59,7 @@ export default function NavBar({user}){
           </Space>
         }
       >
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
+        <p>Bio: {user.bio}</p>
       </Drawer>
         </section>
     )

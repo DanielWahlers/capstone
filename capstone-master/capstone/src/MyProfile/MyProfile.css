@@ -46,10 +46,6 @@
   display: flex;
 }
 
-.MyProfile #navbar img{
-  width: 100px;
-}
-
 
 .MyProfile .buttons{
   display: flex;

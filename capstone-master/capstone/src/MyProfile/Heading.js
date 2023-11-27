@@ -37,7 +37,7 @@ export default function Heading({user}){
     return(
         <div>
             <section id="banner">
-                <img id="profile-pic" src={user.media_link}/>
+                <img id="profile-pic" src={user.media_link.media_link}/>
                 <img id="background-img" src="https://picsum.photos/1300/220?id=1"/>
                 <div id="banner-content">
                     <h1 id="username" >{user.username}</h1>

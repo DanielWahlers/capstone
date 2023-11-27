@@ -61,32 +61,41 @@ export default function SignUpWindow({setWindowType}){
         return;
     }
 
-    async function signUp(ev){
-        if(ev){
-            ev.preventDefault();
-        }
-        //create the json formatted userdata
-        const firstName = document.getElementById("firstname");
-        const lastName = document.getElementById("lastname");
-        const email = document.getElementById("email");
-        const password = document.getElementById("password");
-        const username = document.getElementById("username");
-        const userData = {
-            'first_name': firstName,
-            'last_name' : lastName,
-            'email' : email,
-            'user_password' : password,
-            'username' : username
-        };
+    async function signUp(){
+        const firstName = document.getElementById("firstnameInput").value;
+        const lastName = document.getElementById("lastnameInput").value;
+        const email = document.getElementById("emailInput").value;
+        const password = document.getElementById("passwordInput").value;
+        const username = document.getElementById("usernameInput").value;
+        const confirm = document.getElementById("confirmInput").value;
 
-        const url = apiString + "/users";
-        const res = await fetch(url, {
-            method: "POST",
-            headers: {'Content-Type': 'application.json'},
-            body: JSON.stringify(userData)
-        });
-        const account = await res.json();
-        console.log(account);
+        alert("This is the values\nfirstname: " + firstName + "\nlastname: " + lastName + "\nemail: " + email + "\npassword: " + password + "\nconfirm: " + confirm + "\nusername: " + username);
+        if(password != confirm){
+          alert("Cannot Sign Up, Passwords don't match!");
+        } else if(firstName == "" || lastName == "" || email == "" || password =="" || confirm == "" ||username == ""){
+          alert("All fields need to be filled out");
+        }else{
+          console.log("this is making it here for some reason");
+          try{
+          const url = apiString + "/users";
+          const requestOptions = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: {'username': username,
+                  'firstname': firstName,
+                  'lastname': lastName,
+                  'user_password': password,
+                  'email': email}
+          };
+          const results = await fetch(url, requestOptions);
+          const user = await results.json();
+          console.log("New User: ", user);
+          setWindowType('login');
+        } catch(error){
+          console.log("error:", error);
+          alert("Something went wrong");
+        }
+        }
     }
 
     return(
@@ -140,7 +149,7 @@ export default function SignUpWindow({setWindowType}){
           },
         ]}
       >
-        <Input />
+        <Input id="emailInput"/>
       </Form.Item>
 
       <Form.Item
@@ -155,7 +164,7 @@ export default function SignUpWindow({setWindowType}){
         ]}
         hasFeedback
       >
-        <Input.Password />
+        <Input.Password id="passwordInput"/>
       </Form.Item>
 
       <Form.Item
@@ -178,7 +187,7 @@ export default function SignUpWindow({setWindowType}){
           }),
         ]}
       >
-        <Input.Password />
+        <Input.Password id="confimInput"/>
       </Form.Item>
 
       <Form.Item
@@ -193,7 +202,7 @@ export default function SignUpWindow({setWindowType}){
           },
         ]}
       >
-        <Input />
+        <Input id="firstnameInput"/>
       </Form.Item>
 
       <Form.Item
@@ -208,7 +217,7 @@ export default function SignUpWindow({setWindowType}){
           },
         ]}
       >
-        <Input />
+        <Input id="lastnameInput"/>
       </Form.Item>
 
       <Form.Item
@@ -224,7 +233,7 @@ export default function SignUpWindow({setWindowType}){
           },
         ]}
       >
-        <Input />
+        <Input id="usernameInput"/>
       </Form.Item>
 
       {/* <Form.Item label="Captcha" extra="We must make sure that your are a human.">

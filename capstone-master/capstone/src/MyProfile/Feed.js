@@ -36,6 +36,8 @@ export default function Feed({tab, user}){
         const url =  apiString + `/profile/posted?user_id=${user.id}`;
         const res = await fetch(url);
         const results = await res.json();
+
+        console.log("results", results);
         setMyPosts(results);
     }
 
@@ -63,7 +65,7 @@ export default function Feed({tab, user}){
         //myPosts.map(post => <Art post={post}/>)
 
         console.log("displayMyPosts", myPosts);
-        const displayPosts = myPosts.map(post => <Art post={post}/>);
+        const displayPosts = myPosts.forEach(post => <Art post={post}/>);
         console.log("displayPosts", displayPosts);
         return ({displayPosts})
     }
@@ -81,6 +83,7 @@ export default function Feed({tab, user}){
         getMyPosts();
         getMyPromotions();
         getMyLikes();
+        //console.log("myPosts", myPosts);
     },[]);
 
     return(
@@ -88,15 +91,34 @@ export default function Feed({tab, user}){
             <div>
                 {/* <p>This is what should be here {tab}</p> */}
                 {(() => {
-                if (tab == "posts") {
-                    {myPosts.map(post => <Art post={post}/>)}
-                } else if (tab == "promotions"){
-                    displayMyPromotes();
+                if (tab === "posts") {
+                    //<p>{myPosts[0].title}</p>
+                    //displayMyPosts();
+                    return (<section>
+                        <button id="create-button" onClick={createPin}>Create Pin</button>
+                        {myPosts.map((post) => {if(post.media[0].media_type === "photo")return <img className="myPosts" src={post.media[0].media_link}/>
+                                                else if(post.media[0].media_type ==="video") return <video controls><source src={post.media[0].media_link}/></video>
+                                                else if(post.media[0].media_type === "audio") return <audio controls><source src={post.media[0].media_link}/></audio>
+                                                else return <p>There was a problem loading the media</p>})}
+                        </section>)
+                } else if (tab === "promotions"){
+                    return (<section>
+                        {myPromotes.map((post) => {if(post.media[0].media_type === "photo")return <img className="myPosts" src={post.media[0].media_link}/>
+                                                else if(post.media[0].media_type ==="video") return <video controls><source src={post.media[0].media_link}/></video>
+                                                else if(post.media[0].media_type === "audio") return <audio controls><source src={post.media[0].media_link}/></audio>
+                                                else return <p>There was a problem loading the media</p>})}
+                    </section>)
                 }
                 else{
-                    return displayMyLiked();
+                    return (<section>
+                        {myLiked.map((post) => {if(post.media[0].media_type === "photo")return <img className="myPosts" src={post.media[0].media_link}/>
+                                                else if(post.media[0].media_type ==="video") return <video controls><source src={post.media[0].media_link}/></video>
+                                                else if(post.media[0].media_type === "audio") return <audio controls><source src={post.media[0].media_link}/></audio>
+                                                else return <p>There was a problem loading the media</p>})}
+                        </section>)
                 }
                 })()}
+                {/* <button onClick={createPin}>create</button> */}
             </div>
         </section>
     )

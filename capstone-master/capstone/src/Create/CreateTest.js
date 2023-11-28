@@ -8,13 +8,13 @@ import { useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import { Modal, Upload } from 'antd';
 
-const getBase64 = (file) =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = (error) => reject(error);
-  });
+// const getBase64 = (file) =>
+//   new Promise((resolve, reject) => {
+//     const reader = new FileReader();
+//     reader.readAsDataURL(file);
+//     reader.onload = () => resolve(reader.result);
+//     reader.onerror = (error) => reject(error);
+//   });
 
 export default function Create(){
     const location = useLocation();
@@ -24,16 +24,16 @@ export default function Create(){
   const [previewTitle, setPreviewTitle] = useState('');
   const [fileList, setFileList] = useState([]);
 
-  const handleCancel = () => setPreviewOpen(false);
-  const handlePreview = async (file) => {
-    if (!file.url && !file.preview) {
-      file.preview = await getBase64(file.originFileObj);
-    }
-    setPreviewImage(file.url || file.preview);
-    setPreviewOpen(true);
-    setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1));
-  };
-  const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
+  // const handleCancel = () => setPreviewOpen(false);
+  // const handlePreview = async (file) => {
+  //   if (!file.url && !file.preview) {
+  //     file.preview = await getBase64(file.originFileObj);
+  //   }
+  //   setPreviewImage(file.url || file.preview);
+  //   setPreviewOpen(true);
+  //   setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1));
+  // };
+  // const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
   const uploadButton = (
     <div>
       <PlusOutlined />
@@ -64,12 +64,14 @@ const apiString = "http://localhost:5000";
     async function submit(ev){
         ev.preventDefault();
         const userFile = document.getElementById('file').files[0];
+        const title = document.getElementsByName('title')[0].value;
         const formData = new FormData();
-        formData.append('userFile', userFile);
-        const url = apiString + `/upload`;
+        formData.append('file', userFile);
+        const url = apiString + `/upload?title=${title}&user_id=${location.state.user.id}`;
         const requestOptions = {
             method: 'POST',
-            body: formData
+            body: formData,
+            // headers: {'Content-Type': 'multipart/form-data'}
         };
         const res = await fetch(url, requestOptions);
         const uploadData = await res.json();
@@ -86,6 +88,7 @@ const apiString = "http://localhost:5000";
                 <h1>Upload a file to Amazon S3</h1>
                 <form id="form">
                     <input id="file" type="file" name="file" required/>
+                    <input id="title" type="text" name="title" required/>
                     <button onClick={submit}>Upload</button>
                 </form>
               </div>

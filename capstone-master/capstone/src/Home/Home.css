@@ -58,6 +58,10 @@
   z-index: 1;
 }
 
+.Home video{
+  width: 38vw;
+}
+
 .Home .artist{
   grid-column: 1;
   grid-row: 1;
@@ -190,4 +194,6 @@
   opacity: 0;
 }
 
-
+/* .Home .comment-box{
+  width: 300px;
+} */

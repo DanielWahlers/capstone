@@ -12,12 +12,21 @@
 }
 
 .Profile #feed{
+  /* display: grid;
+  grid-template-columns: auto auto; */
+  grid-column: 1;
+  grid-row:2;
+}
+
+.Profile #feed section{
   display: grid;
   grid-template-columns: auto auto;
+  
 }
 
 .Profile #feed img{
   height: 300px;
+  
 }
 
 .Profile .App-logo {
@@ -35,13 +44,6 @@
   padding-top: 80px;
 }
 
-.Profile #navbar{
-  position: fixed;
-  width: 100vw;
-  background-color: white;
-  z-index: 50;
-}
-
 .Profile .flexbar{
   display: flex;
   justify-content: space-between;
@@ -50,7 +52,6 @@
 .Profile .flexbar div{
   display: flex;
 }
-
 
 
 .Profile .buttons{
@@ -74,6 +75,7 @@
   display: flex;
   justify-content: left;
   margin-left: 5px;
+  grid-row: 1/3;
 }
 
 .Profile #controls{
@@ -107,11 +109,8 @@
   margin-top: 10px;
 }
 
-.Profile #username{
-}
-
 @media (prefers-reduced-motion: no-preference) {
-  .MyProfile  .App-logo {
+  .Profile  .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
 }
@@ -138,5 +137,10 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.Profile #create-button{
+  height: 300px;
+  width: 420px;
 }
 

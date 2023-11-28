@@ -135,6 +135,24 @@ async function getCondition(table, field, condition){
     return result[0];
 }
 
+async function getComments(condition){
+    const connection = await mysql2.createConnection(config.db);
+    let results = await connection.promise().query(
+        `SELECT * FROM comments WHERE post_id = ?`, condition
+    );
+    results = results[0];
+    for(const result of results){
+        let sql = `SELECT username FROM users WHERE id = ?`;
+        let author = await connection.promise().query(
+            sql, result.user_id
+        );
+        author = author[0];
+        result.author = author;
+    }
+    connection.destroy();
+    return results;
+}
+
 async function getInNotIn(num, table, good, bad){
     const connection = await mysql2.createConnection(config.db);
     const sql =  `SELECT * FROM ${table} WHERE id IN (?) AND id NOT IN (?) ORDER BY date_posted LIMIT ?`;
@@ -537,5 +555,6 @@ export{
     getPromotions,
     getDoubleCondition, 
     getAuthoredPosts,
-    getLikedPosts
+    getLikedPosts,
+    getComments
 };

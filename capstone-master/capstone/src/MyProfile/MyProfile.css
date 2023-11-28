@@ -12,14 +12,26 @@
 }
 
 .MyProfile #feed{
-  display: grid;
-  grid-template-columns: auto auto;
+  /* display: grid;
+  grid-template-columns: auto auto; */
   grid-column: 1;
   grid-row:2;
 }
 
+.MyProfile #feed section{
+  display: grid;
+  grid-template-columns: auto auto;
+  
+}
+
 .MyProfile #feed img{
   height: 300px;
+  
+}
+
+.MyProfile #feed video{
+  height: 236px;
+  
 }
 
 .MyProfile .App-logo {
@@ -102,9 +114,6 @@
   margin-top: 10px;
 }
 
-.MyProfile #username{
-}
-
 @media (prefers-reduced-motion: no-preference) {
   .MyProfile  .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -133,5 +142,10 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.MyProfile #create-button{
+  height: 300px;
+  width: 420px;
 }
 

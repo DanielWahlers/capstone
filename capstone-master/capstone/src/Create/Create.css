@@ -1,3 +1,17 @@
 .Create{
+    text-align: center;
     background-color: whitesmoke;
+    color: #292929;
+    overflow-x: hidden;
+}
+
+.Create main{
+    position: absolute;
+    top: 83px;
+    background-color: whitesmoke;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    justify-content:center;
 }

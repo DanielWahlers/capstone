@@ -44,7 +44,7 @@ export default function Heading({author}){
                             })}
                         />
                     </div>
-                    <Feed tab={tab}/>
+                    <Feed tab={tab} author={author}/>
                     <div id="friends">Friends:</div>
                 </div>
             </section>

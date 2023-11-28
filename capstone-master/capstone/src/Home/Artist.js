@@ -18,7 +18,6 @@ export default function Artist({post, user, setSizes, toggle}){
 
 const [modalOpen, setModalOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
-  const [modalText, setModalText] = useState('No Comments yet');
   const showModal = () => {
 
     //update modalText before showing it
@@ -30,7 +29,6 @@ const [modalOpen, setModalOpen] = useState(false);
   };
 
   const handleOk = () => {
-    setModalText('Posting Your Comment');
     setConfirmLoading(true);
     setTimeout(() => {
       setModalOpen(false);
@@ -59,9 +57,6 @@ const [modalOpen, setModalOpen] = useState(false);
         const res = await fetch(url);
         const results = await res.json();
         setComments(results);
-
-        const commentPrint = comments.map((comment)=>{return(`${comment.comment_text}\n`)});
-        setModalText(commentPrint);
       }
 
     async function getInteractions(){
@@ -98,6 +93,7 @@ const [modalOpen, setModalOpen] = useState(false);
     useEffect(()=>{
         getInteractions();
         getComments();
+        console.log("Comments", comments);
         console.log("I am within the useEffect on the Artist");
     }, []);
 
@@ -251,6 +247,21 @@ const [modalOpen, setModalOpen] = useState(false);
         }
     }
 
+    async function postComment(ev){
+        ev.preventDefault();
+        const commentText = document.getElementsByName('comment-box')[0].value;
+        if(commentText !== ""){
+            const url = apiString + `/comments?comment_text=${commentText}&post_id=${post.id}&user_id=${user.id}`;
+            const requestOptions = {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'}
+            };
+            const res = await fetch(url, requestOptions);
+            const commentData = await res.json();
+            console.log(commentData);
+        }
+    }
+
     // function interact(){
     //     document.getElementById("user-promotions-" + post.id).hidden = true;
     //     document.getElementById("self-promotions-" + post.id).style.zIndex = 2;
@@ -315,7 +326,7 @@ const [modalOpen, setModalOpen] = useState(false);
                     <button id={"dislike-button-" + post.id} onClick={dislike}>{disliked? <i className="fa solid fa-thumbs-down"></i>: <i className="fa-regular fa-thumbs-down"></i>}</button>
                 </div>
             </div>
-            <p onClick={showModal}>This is where the comments will go, it will either have a single line of compliments or critiques or have both on display</p>
+            <section onClick={showModal}>{comments.length === 0 ? <p>No Comments on This Pin Yet</p>: <p>{comments[0].comment_text}</p>}</section>
             <Modal
                 centered
                 title="Comments"
@@ -325,8 +336,13 @@ const [modalOpen, setModalOpen] = useState(false);
                 confirmLoading={confirmLoading}
                 onCancel={handleCancel}
             >
-                
-                <p>{modalText}</p>
+                {comments.length === 0?<p>No comments yet</p>:<div><p>{comments.map((comment) => {return(<div className="flexbar"><h3>{comment.author[0].username}</h3><p>{comment.comment_text}</p></div>)})}</p></div>}
+                <form>
+                    <label for="comment-prompt">Comment:</label>
+                    <input type="text" className="comment-box" name="comment-box"/>
+                    <button onClick={postComment}>post comment</button>
+                </form>
+                {/* <p>{modalText}</p> */}
             </Modal>
             <div className="buttons">
                 <div>

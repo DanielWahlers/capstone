@@ -269,7 +269,7 @@ async function getFeedNew(userId, currentFeed){
             newFeed.push(followerResults[followerNum]);
             followerNum++;
         }
-        else if (num < 80){
+        else if (num < 85){
             newFeed.push(promoteResults[promoterNum]);
             promoterNum++;
         }
